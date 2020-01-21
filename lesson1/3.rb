@@ -12,8 +12,8 @@ if a == b || b == c || c == a
   puts "Треугольник равнобедренный"
 end
 
-arr = [a, b, c]
-max = arr.max
-if max ** 2 == arr.reject { |i| i == max }.sum { |i| i ** 2 }
+a, b, c = [a, b, c].sort
+
+if c ** 2 == a ** 2 + b ** 2
   puts "Треугольник прямоугольный"
 end
