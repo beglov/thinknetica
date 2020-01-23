@@ -1,7 +1,7 @@
 arr = [1, 1]
 
-while (arr[-1] + arr[-2]) < 100
-  arr << (arr[-1] + arr[-2])
+while (last = arr[-1] + arr[-2]) < 100
+  arr << last
 end
 
 puts arr

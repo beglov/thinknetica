@@ -8,15 +8,7 @@ year = gets.chomp.to_i
 # Однако, если он делится без остатка на 400, это високосный год. Таким образом, 2000 г. является особым високосным годом,
 # который бывает лишь раз в 400 лет.
 
-is_leap_year = if year % 400 == 0
-                 true
-               elsif year % 100 == 0
-                 false
-               elsif year % 4 == 0
-                 true
-               else
-                 false
-               end
+is_leap_year = ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0) ? true : false
 
 months = {
     1 => 31,
@@ -33,10 +25,6 @@ months = {
     12 => 31,
 }
 
-yday = 0
-(1..(month - 1)).each do |i|
-  yday += months[i]
-end
-yday += day
+yday = months.take(month - 1).sum(day) { |month, days| days }
 
 puts "Порядковый номер даты, начиная отсчет с начала года: #{yday}"

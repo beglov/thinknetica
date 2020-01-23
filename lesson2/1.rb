@@ -1,4 +1,4 @@
-h = {
+months = {
     'Январь' => 31,
     'Февраль' => 29,
     'Март' => 31,
@@ -13,6 +13,6 @@ h = {
     'Декабрь' => 31,
 }
 
-h.each do |k, v|
-  puts k if v == 30
+months.each do |month, days|
+  puts month if days == 30
 end
