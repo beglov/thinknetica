@@ -16,8 +16,12 @@ class Station
     trains.delete(train)
   end
 
-  def trains_by_type(type)
-    trains.select { |i| i.type == type }
+  def trains_by_type(type = nil)
+    if type
+      trains.select { |i| i.type == type }
+    else
+      trains
+    end
   end
 end
 
@@ -42,12 +46,12 @@ class Route
 end
 
 class Train
-  attr_reader :no, :type, :cnt_carriage, :speed, :route, :current_station
+  attr_reader :no, :type, :count_carriage, :speed, :route, :current_station
 
   def initialize(no, type, cnt_carriage)
     @no = no
     @type = type
-    @cnt_carriage = cnt_carriage
+    @count_carriage = cnt_carriage
     @speed = 0
   end
 
@@ -60,12 +64,12 @@ class Train
     @speed = 0 if @speed < 0
   end
 
-  def cnt_carriage_up
-    @cnt_carriage += 1 if speed == 0
+  def count_carriage_up
+    @count_carriage += 1 if speed == 0
   end
 
-  def cnt_carriage_down
-    @cnt_carriage -= 1 if speed == 0
+  def count_carriage_down
+    @count_carriage -= 1 if speed == 0
   end
 
   def current_station=(station)
@@ -81,12 +85,12 @@ class Train
 
   def next_station
     current_station_index = route.stations.index(current_station)
-    route.stations[current_station_index + 1]
+    route.stations[current_station_index + 1] if route.stations[current_station_index + 1]
   end
 
   def prev_station
     current_station_index = route.stations.index(current_station)
-    route.stations[current_station_index - 1]
+    route.stations[current_station_index - 1] if route.stations[current_station_index - 1]
   end
 
   def forward
@@ -98,20 +102,20 @@ class Train
   end
 end
 
-st1 = Station.new('Ожерелье')
-st2 = Station.new('Москва')
-st3 = Station.new('Кашира')
-st4 = Station.new('Ступино')
-st5 = Station.new('Ситенка')
+station1 = Station.new('Ожерелье')
+station2 = Station.new('Москва')
+station3 = Station.new('Кашира')
+station4 = Station.new('Ступино')
+station5 = Station.new('Ситенка')
 
-rt = Route.new(st1, st2)
-rt.add_station(st3)
-rt.add_station(st4)
-rt.add_station(st5)
-rt.show_route
-rt.delete_station(st3)
-rt.show_route
-rt.stations
+route = Route.new(station1, station2)
+route.add_station(station3)
+route.add_station(station4)
+route.add_station(station5)
+route.show_route
+route.delete_station(station3)
+route.show_route
+route.stations
 
 train1 = Train.new('123', 'грузовой', 10)
 train2 = Train.new('456', 'пассажирский', 15)
@@ -122,16 +126,21 @@ train1.speed
 train1.speed_down(5)
 train1.speed
 
-train1.cnt_carriage
-train1.cnt_carriage_up
-train1.cnt_carriage
+train1.count_carriage
+train1.count_carriage_up
+train1.count_carriage
 train1.speed_down(25)
-train1.cnt_carriage_up
-train1.cnt_carriage
+train1.count_carriage_up
+train1.count_carriage
 
 train1.current_station
-train1.assign_route(rt)
-train2.assign_route(rt)
+station1.trains
+train1.assign_route(route)
+train2.assign_route(route)
+station1.trains
+station1.trains_by_type
+station1.trains_by_type('грузовой')
+station1.trains_by_type('пассажирский')
 train1.current_station
 
 train1.forward
