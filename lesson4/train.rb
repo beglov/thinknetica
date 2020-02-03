@@ -1,11 +1,24 @@
+require_relative 'manufacturer_mixin'
+require_relative 'instance_counter'
+
 class Train
+  include ManufacturerMixin
+  include InstanceCounter
   attr_reader :no, :type, :wagons, :speed, :route, :current_station
+
+  @@trains = {}
+
+  def self.find(no)
+    @@trains[no]
+  end
 
   def initialize(no, type)
     @no = no
+    @@trains[no] = self
     @type = type
     @wagons = []
     @speed = 0
+    register_instance
   end
 
   def speed_up(speed = 10)
