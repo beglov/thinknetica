@@ -3,7 +3,7 @@ class PassengerTrain < Train
     super(no, :passenger)
   end
 
-  def add_wagon
-    super(PassengerWagon.new)
+  def add_wagon(wagon = PassengerWagon.new)
+    super
   end
 end

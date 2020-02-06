@@ -30,8 +30,8 @@ def create_and_manage_routes(railway)
 
   if action.zero?
     until [1, 2].include?(action)
-      puts "Введеите 1 что бы создать новый маршрут"
-      puts "Введеите 2 что бы отредактировать существующий маршрут"
+      puts 'Введеите 1 что бы создать новый маршрут'
+      puts 'Введеите 2 что бы отредактировать существующий маршрут'
       action = gets.chomp.to_i
     end
   end
@@ -46,8 +46,8 @@ def create_and_manage_routes(railway)
 
     action = 0
     until [1, 2].include?(action)
-      puts "Введите 1 что бы добавить станцию"
-      puts "Введите 2 что бы удалить станцию"
+      puts 'Введите 1 что бы добавить станцию'
+      puts 'Введите 2 что бы удалить станцию'
       action = gets.chomp.to_i
     end
 
@@ -67,8 +67,8 @@ def move_train(railway)
 
   action = 0
   until [1, 2].include?(action)
-    puts "Введеите 1 что бы переместить поезд вперед"
-    puts "Введеите 2 что бы переместить поезд назад"
+    puts 'Введеите 1 что бы переместить поезд вперед'
+    puts 'Введеите 2 что бы переместить поезд назад'
     action = gets.chomp.to_i
   end
 
@@ -81,14 +81,22 @@ def move_train(railway)
 end
 
 def show_stations_and_trains(railway)
-  puts "Список станций:"
+  puts 'Список станций:'
+
   railway.stations.each do |station|
-    puts "Станция '#{station}'"
-    if station.trains.empty?
-      puts "Поездов на станции нет."
-    else
-      puts "Поезда на ней в данный момент:"
-      puts station.trains
+    puts "== #{station}. #{station.trains.empty? ? 'Поездов на станции нет.' : 'Поезда на ней в данный момент:'}"
+
+    station.trains do |train|
+      puts "==== Номер поезда: #{train.no}, тип: #{train.type_label}, кол-во вагонов: #{train.wagons.size}"
+
+      count_wagon = 0
+      train.wagons do |wagon|
+        if wagon.is_a?(PassengerWagon)
+          puts "====== Номер вагона: #{count_wagon += 1}, тип вагона: пассажирский, кол-во свободных мест: #{wagon.free_seats}, кол-во занятых мест: #{wagon.occupied_seats}"
+        else
+          puts "====== Номер вагона: #{count_wagon += 1}, тип вагона: грузовой, кол-во свободного объема: #{wagon.free_volume}, кол-во занятого объема: #{wagon.occupied_volume}"
+        end
+      end
     end
   end
 end

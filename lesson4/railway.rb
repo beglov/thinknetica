@@ -68,11 +68,29 @@ class Railway
 
     self.routes = [route]
 
-    self.trains = [
-        PassengerTrain.new('q2w-12'),
-        PassengerTrain.new('321ed'),
-        CargoTrain.new('12r-y3'),
-    ]
+    train = PassengerTrain.new('q2w-12')
+    train.assign_route(route)
+    wagon = PassengerWagon.new
+    wagon.take_seat
+    wagon.take_seat
+    wagon.take_seat
+    wagon.take_seat
+    train.add_wagon(wagon)
+    wagon = PassengerWagon.new(10)
+    wagon.take_seat
+    wagon.take_seat
+    train.add_wagon(wagon)
+    wagon = CargoWagon.new
+    wagon.take_volume(30)
+    train.add_wagon(wagon)
+    trains << train
+
+    train = PassengerTrain.new('321ed')
+    trains << train
+
+    train = CargoTrain.new('12r-y3')
+    train.assign_route(route)
+    trains << train
   end
 
   def clear

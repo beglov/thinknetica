@@ -5,7 +5,7 @@ class Station
   include InstanceCounter
   include Validatable
 
-  attr_reader :name, :trains
+  attr_reader :name
 
   @@stations = []
 
@@ -19,6 +19,14 @@ class Station
     @@stations << self
     validate!
     register_instance
+  end
+
+  def trains(&block)
+    if block_given?
+      @trains.each { |train| block.call(train) }
+    else
+      @trains
+    end
   end
 
   def take_train(train)
