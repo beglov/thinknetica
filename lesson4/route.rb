@@ -30,7 +30,7 @@ class Route
   private
 
   def validate!
-    raise "Укажите начальную станцию" if start_station.nil?
-    raise "Укажите конечную станцию" if end_station.nil?
+    raise ArgumentError, 'Укажите начальную станцию' if start_station.nil?
+    raise ArgumentError, 'Укажите конечную станцию' if end_station.nil?
   end
 end

@@ -46,7 +46,7 @@ class Station
   private
 
   def validate!
-    raise "Укажите название станции" if name.nil?
-    raise "Название станции должно содержать как минимук один символ" if name.length < 1
+    raise ArgumentError, 'Укажите название станции' if name.nil?
+    raise ArgumentError, 'Название станции должно содержать как минимук один символ' if name.length < 1
   end
 end

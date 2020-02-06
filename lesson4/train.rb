@@ -85,9 +85,9 @@ class Train
   protected
 
   def validate!
-    raise 'Укажите номер поезда' if no.nil?
-    raise 'Укажите тип' if type.nil?
-    raise 'У номера не верный формат' if no !~ NUMBER_FORMAT
+    raise ArgumentError, 'Укажите номер поезда' if no.nil?
+    raise ArgumentError, 'Укажите тип' if type.nil?
+    raise ArgumentError, 'У номера не верный формат' if no !~ NUMBER_FORMAT
   end
 
   # делаем метод закрытым что бы небыло возможности из вне назначить произвольную станцию
