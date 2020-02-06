@@ -69,9 +69,9 @@ class Railway
     self.routes = [route]
 
     self.trains = [
-        PassengerTrain.new('123'),
-        PassengerTrain.new('345'),
-        CargoTrain.new('qwerty'),
+        PassengerTrain.new('q2w-12'),
+        PassengerTrain.new('321ed'),
+        CargoTrain.new('12r-y3'),
     ]
   end
 

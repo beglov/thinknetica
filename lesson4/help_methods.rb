@@ -17,7 +17,12 @@ def create_train(railway)
     action = gets.chomp.to_i
   end
 
-  railway.trains << (action == 1 ? CargoTrain.new(no) : PassengerTrain.new(no))
+  train = action == 1 ? CargoTrain.new(no) : PassengerTrain.new(no)
+  puts "Создан поезд номер #{train.no}, тип #{train.type_label}"
+  railway.trains << train
+rescue RuntimeError => e
+  puts e.message
+  retry
 end
 
 def create_and_manage_routes(railway)

@@ -1,11 +1,17 @@
 require_relative 'instance_counter'
+require_relative 'validatable'
 
 class Route
   include InstanceCounter
-  attr_reader :stations
+  include Validatable
+
+  attr_reader :stations, :start_station, :end_station
 
   def initialize(start_station, end_station)
-    @stations = [start_station, end_station]
+    @start_station = start_station
+    @end_station = end_station
+    @stations = [@start_station, @end_station]
+    validate!
     register_instance
   end
 
@@ -19,5 +25,12 @@ class Route
 
   def to_s
     stations.map(&:name).join(' => ')
+  end
+
+  private
+
+  def validate!
+    raise "Укажите начальную станцию" if start_station.nil?
+    raise "Укажите конечную станцию" if end_station.nil?
   end
 end

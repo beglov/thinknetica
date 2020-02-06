@@ -1,7 +1,10 @@
 require_relative 'instance_counter'
+require_relative 'validatable'
 
 class Station
   include InstanceCounter
+  include Validatable
+
   attr_reader :name, :trains
 
   @@stations = []
@@ -14,6 +17,7 @@ class Station
     @name = name
     @trains = []
     @@stations << self
+    validate!
     register_instance
   end
 
@@ -37,5 +41,12 @@ class Station
 
   def to_s
     name
+  end
+
+  private
+
+  def validate!
+    raise "Укажите название станции" if name.nil?
+    raise "Название станции должно содержать как минимук один символ" if name.length < 1
   end
 end

@@ -1,10 +1,15 @@
 require_relative 'manufacturer_mixin'
 require_relative 'instance_counter'
+require_relative 'validatable'
 
 class Train
   include ManufacturerMixin
   include InstanceCounter
+  include Validatable
+
   attr_reader :no, :type, :wagons, :speed, :route, :current_station
+
+  NUMBER_FORMAT = /^[\w\d]{3}-?[\w\d]{2}$/i
 
   @@trains = {}
 
@@ -18,6 +23,7 @@ class Train
     @type = type
     @wagons = []
     @speed = 0
+    validate!
     register_instance
   end
 
@@ -77,6 +83,12 @@ class Train
   end
 
   protected
+
+  def validate!
+    raise 'Укажите номер поезда' if no.nil?
+    raise 'Укажите тип' if type.nil?
+    raise 'У номера не верный формат' if no !~ NUMBER_FORMAT
+  end
 
   # делаем метод закрытым что бы небыло возможности из вне назначить произвольную станцию
   def current_station=(station)
