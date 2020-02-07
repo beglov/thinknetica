@@ -86,11 +86,11 @@ def show_stations_and_trains(railway)
   railway.stations.each do |station|
     puts "== #{station}. #{station.trains.empty? ? 'Поездов на станции нет.' : 'Поезда на ней в данный момент:'}"
 
-    station.trains do |train|
+    station.each_train do |train|
       puts "==== Номер поезда: #{train.no}, тип: #{train.type_label}, кол-во вагонов: #{train.wagons.size}"
 
       count_wagon = 0
-      train.wagons do |wagon|
+      train.each_wagon do |wagon|
         if wagon.is_a?(PassengerWagon)
           puts "====== Номер вагона: #{count_wagon += 1}, тип вагона: пассажирский, кол-во свободных мест: #{wagon.free_seats}, кол-во занятых мест: #{wagon.occupied_seats}"
         else

@@ -7,7 +7,7 @@ class Train
   include InstanceCounter
   include Validatable
 
-  attr_reader :no, :type, :speed, :route, :current_station
+  attr_reader :no, :type, :wagons, :speed, :route, :current_station
 
   NUMBER_FORMAT = /^[\w\d]{3}-?[\w\d]{2}$/i
 
@@ -27,12 +27,8 @@ class Train
     register_instance
   end
 
-  def wagons
-    if block_given?
-      @wagons.each { |wagon| yield(wagon) }
-    else
-      @wagons
-    end
+  def each_wagon
+    wagons.each { |wagon| yield(wagon) } if block_given?
   end
 
   def speed_up(speed = 10)
