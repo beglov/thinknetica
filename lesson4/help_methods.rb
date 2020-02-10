@@ -6,6 +6,7 @@ def create_station(railway)
   railway.stations << Station.new(name)
 end
 
+# rubocop:disable Metrics/AbcSize, Metrics/MethodLength
 def create_train(railway)
   puts 'Введите номер поезда:'
   no = gets.chomp.to_s
@@ -27,6 +28,7 @@ rescue RuntimeError => e
   retry
 end
 
+# rubocop:disable Metrics/CyclomaticComplexity
 def create_and_manage_routes(railway)
   action = railway.routes.empty? ? 1 : 0
 
@@ -63,6 +65,7 @@ def create_and_manage_routes(railway)
     end
   end
 end
+# rubocop:enable Metrics/CyclomaticComplexity
 
 def move_train(railway)
   train = railway.select_train
@@ -92,6 +95,7 @@ def show_stations_and_trains(railway)
       puts "==== Номер поезда: #{train.no}, тип: #{train.type_label}, кол-во вагонов: #{train.wagons.size}"
 
       count_wagon = 0
+      # rubocop:disable Layout/LineLength
       train.each_wagon do |wagon|
         if wagon.is_a?(PassengerWagon)
           puts "====== Номер вагона: #{count_wagon += 1}, тип вагона: пассажирский, кол-во свободных мест: #{wagon.free_seats}, кол-во занятых мест: #{wagon.occupied_seats}"
@@ -99,6 +103,8 @@ def show_stations_and_trains(railway)
           puts "====== Номер вагона: #{count_wagon += 1}, тип вагона: грузовой, кол-во свободного объема: #{wagon.free_volume}, кол-во занятого объема: #{wagon.occupied_volume}"
         end
       end
+      # rubocop:enable Layout/LineLength
     end
   end
 end
+# rubocop:enable Metrics/AbcSize, Metrics/MethodLength

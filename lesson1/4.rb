@@ -10,9 +10,9 @@ d = b**2 - 4 * a * c
 
 puts "Дескрименант равен #{d}"
 
-if d < 0
+if d.negative?
   puts 'Корней нет'
-elsif d == 0
+elsif d.zero?
   x = -b / (2 * a)
   puts "Есть один корень #{x}"
 else

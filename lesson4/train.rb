@@ -4,6 +4,7 @@ require_relative 'manufacturer_mixin'
 require_relative 'instance_counter'
 require_relative 'validatable'
 
+# rubocop:disable Style/ClassVars
 class Train
   include ManufacturerMixin
   include InstanceCounter
@@ -15,13 +16,13 @@ class Train
 
   @@trains = {}
 
-  def self.find(no)
-    @@trains[no]
+  def self.find(number)
+    @@trains[number]
   end
 
-  def initialize(no, type)
-    @no = no
-    @@trains[no] = self
+  def initialize(number, type)
+    @no = number
+    @@trains[number] = self
     @type = type
     @wagons = []
     @speed = 0
@@ -39,15 +40,15 @@ class Train
 
   def speed_down(speed = 10)
     @speed -= speed
-    @speed = 0 if @speed < 0
+    @speed = 0 if @speed.negative?
   end
 
   def add_wagon(wagon)
-    wagons.push(wagon) if speed == 0
+    wagons.push(wagon) if speed.zero?
   end
 
   def delete_wagon
-    wagons.pop if speed == 0 && !wagons.empty?
+    wagons.pop if speed.zero? && !wagons.empty?
   end
 
   def assign_route(route)
@@ -103,3 +104,4 @@ class Train
     station.take_train(self)
   end
 end
+# rubocop:enable Style/ClassVars

@@ -3,6 +3,7 @@
 require_relative 'instance_counter'
 require_relative 'validatable'
 
+# rubocop:disable Style/ClassVars
 class Station
   include InstanceCounter
   include Validatable
@@ -53,8 +54,7 @@ class Station
 
   def validate!
     raise ArgumentError, 'Укажите название станции' if name.nil?
-    if name.empty?
-      raise ArgumentError, 'Название станции должно содержать как минимук один символ'
-    end
+    raise ArgumentError, 'Название станции должно содержать как минимук один символ' if name.empty?
   end
 end
+# rubocop:enable Style/ClassVars

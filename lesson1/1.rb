@@ -8,7 +8,7 @@ height = gets.chomp
 
 weight = (height.to_f - 110) * 1.15
 
-if weight < 0
+if weight.negative?
   puts 'Ваш вес уже оптимальный'
 else
   puts "Привет #{name}! Твой идеальный вес - #{weight}"

@@ -14,6 +14,7 @@ require_relative 'help_methods'
 railway = Railway.new
 railway.seed
 
+# rubocop:disable Metrics/BlockLength
 loop do
   puts 'Укажите что ходите сделать:'
   puts 'Введите 1 что бы создать станцию'
@@ -57,3 +58,4 @@ loop do
     puts 'Такой команды нет. Введите корректное значение!'
   end
 end
+# rubocop:enable Metrics/BlockLength

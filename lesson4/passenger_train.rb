@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class PassengerTrain < Train
-  def initialize(no)
-    super(no, :passenger)
+  def initialize(number)
+    super(number, :passenger)
   end
 
   def add_wagon(wagon = PassengerWagon.new)

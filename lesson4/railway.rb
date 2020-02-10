@@ -48,6 +48,7 @@ class Railway
     train
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def seed
     station1 = Station.new('Ожерелье')
     station2 = Station.new('Москва')
@@ -94,6 +95,7 @@ class Railway
     train.assign_route(route)
     trains << train
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def clear
     self.stations = []
