@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def create_station(railway)
   puts 'Укажите имя станции:'
   name = gets.chomp.to_s

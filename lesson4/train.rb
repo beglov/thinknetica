@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'manufacturer_mixin'
 require_relative 'instance_counter'
 require_relative 'validatable'
@@ -9,7 +11,7 @@ class Train
 
   attr_reader :no, :type, :wagons, :speed, :route, :current_station
 
-  NUMBER_FORMAT = /^[\w\d]{3}-?[\w\d]{2}$/i
+  NUMBER_FORMAT = /^[\w\d]{3}-?[\w\d]{2}$/i.freeze
 
   @@trains = {}
 
@@ -45,7 +47,7 @@ class Train
   end
 
   def delete_wagon
-    wagons.pop if speed == 0 && wagons.size > 0
+    wagons.pop if speed == 0 && !wagons.empty?
   end
 
   def assign_route(route)
@@ -55,12 +57,12 @@ class Train
 
   def next_station
     current_station_index = route.stations.index(current_station)
-    route.stations[current_station_index + 1] if route.stations[current_station_index + 1]
+    route.stations[current_station_index + 1]
   end
 
   def prev_station
     current_station_index = route.stations.index(current_station)
-    route.stations[current_station_index - 1] if route.stations[current_station_index - 1]
+    route.stations[current_station_index - 1]
   end
 
   def forward
@@ -96,7 +98,7 @@ class Train
 
   # делаем метод закрытым что бы небыло возможности из вне назначить произвольную станцию
   def current_station=(station)
-    current_station.send_train(self) if current_station
+    current_station&.send_train(self)
     @current_station = station
     station.take_train(self)
   end

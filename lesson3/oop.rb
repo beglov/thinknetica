@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Station
   attr_reader :name, :trains
 
@@ -73,7 +75,7 @@ class Train
   end
 
   def current_station=(station)
-    current_station.send_train(self) if current_station
+    current_station&.send_train(self)
     @current_station = station
     station.take_train(self)
   end
@@ -85,12 +87,12 @@ class Train
 
   def next_station
     current_station_index = route.stations.index(current_station)
-    route.stations[current_station_index + 1] if route.stations[current_station_index + 1]
+    route.stations[current_station_index + 1]
   end
 
   def prev_station
     current_station_index = route.stations.index(current_station)
-    route.stations[current_station_index - 1] if route.stations[current_station_index - 1]
+    route.stations[current_station_index - 1]
   end
 
   def forward

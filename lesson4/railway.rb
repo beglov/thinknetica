@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Railway
   attr_accessor :stations, :routes, :trains
 
@@ -54,11 +56,11 @@ class Railway
     station5 = Station.new('Ситенка')
 
     self.stations = [
-        station1,
-        station2,
-        station3,
-        station4,
-        station5,
+      station1,
+      station2,
+      station3,
+      station4,
+      station5
     ]
 
     route = Route.new(station1, station2)

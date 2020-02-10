@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 puts 'Введите три коэффициента'
 
 a = gets.chomp.to_f
 b = gets.chomp.to_f
 c = gets.chomp.to_f
 
-d = b ** 2 - 4 * a * c
+d = b**2 - 4 * a * c
 
 puts "Дескрименант равен #{d}"
 

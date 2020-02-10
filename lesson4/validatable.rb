@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Validatable
   def valid?
     validate!
     true
-  rescue
+  rescue StandardError
     false
   end
 end

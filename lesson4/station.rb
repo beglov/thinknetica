@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'instance_counter'
 require_relative 'validatable'
 
@@ -51,6 +53,8 @@ class Station
 
   def validate!
     raise ArgumentError, 'Укажите название станции' if name.nil?
-    raise ArgumentError, 'Название станции должно содержать как минимук один символ' if name.length < 1
+    if name.empty?
+      raise ArgumentError, 'Название станции должно содержать как минимук один символ'
+    end
   end
 end

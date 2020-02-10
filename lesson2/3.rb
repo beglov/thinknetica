@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 arr = [1, 1]
 
 while (last = arr[-1] + arr[-2]) < 100

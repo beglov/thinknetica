@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 letters = ('a'..'z').to_a
-vowels = %w{a e i o u y}
+vowels = %w[a e i o u y]
 
 h = {}
 vowels.each do |letter|

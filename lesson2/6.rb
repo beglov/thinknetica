@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 products = {}
 
 loop do
@@ -11,7 +13,7 @@ loop do
   puts 'Введите кол-во купленного товара'
   cnt = gets.chomp.to_f
 
-  products[name] = {price: price, cnt: cnt}
+  products[name] = { price: price, cnt: cnt }
 end
 
 total_sum = 0

@@ -1,7 +1,9 @@
-puts "Введите имя"
+# frozen_string_literal: true
+
+puts 'Введите имя'
 name = gets.chomp
 
-puts "Введите рост"
+puts 'Введите рост'
 height = gets.chomp
 
 weight = (height.to_f - 110) * 1.15

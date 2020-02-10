@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'wagon'
 require_relative 'validatable'
 
@@ -24,6 +26,8 @@ class PassengerWagon < Wagon
 
   def validate!
     raise ArgumentError, 'Укажите общее кол-во мест' if total_seats.nil?
-    raise ArgumentError, 'Общее кол-во мест не может быть меньше одного' if total_seats < 1
+    if total_seats < 1
+      raise ArgumentError, 'Общее кол-во мест не может быть меньше одного'
+    end
   end
 end
