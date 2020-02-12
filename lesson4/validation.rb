@@ -7,44 +7,19 @@ module Validation
   end
 
   module ClassMethods
-    attr_accessor :validate_methods
+    attr_accessor :validate_params
 
-    # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
     def validate(name, type, *args)
-      var_name = "@#{name}".to_sym
-      method_name = "#{name}_#{type}".to_sym
-
-      @validate_methods ||= []
-      @validate_methods << method_name
-
-      case type
-      when :presence
-        define_method(method_name) do
-          if instance_variable_get(var_name).to_s == ''
-            raise ArgumentError, "значение атрибута #{name} не может быть пустым"
-          end
-        end
-      when :format
-        define_method(method_name) do
-          if instance_variable_get(var_name).to_s !~ args[0]
-            raise ArgumentError, "значение атрибута #{name} имеет не верный формат"
-          end
-        end
-      when :type
-        define_method(method_name) do
-          unless instance_variable_get(var_name).is_a?(args[0])
-            raise TypeError, "значение атрибута #{name} имеет не верный тип"
-          end
-        end
-      end
+      @validate_params ||= []
+      @validate_params << [name, type, *args]
     end
-    # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
   end
 
   module InstanceMethods
     def validate!
-      self.class.validate_methods.each do |method|
-        send(method)
+      self.class.validate_params.each do |validate_param|
+        name, type, *args = validate_param
+        send("validate_#{type}", name, *args)
       end
     end
 
@@ -53,6 +28,24 @@ module Validation
       true
     rescue StandardError
       false
+    end
+
+    def validate_presence(name, *_args)
+      return unless instance_variable_get("@#{name}".to_sym).to_s == ''
+
+      raise ArgumentError, "значение атрибута #{name} не может быть пустым"
+    end
+
+    def validate_format(name, *args)
+      return unless instance_variable_get("@#{name}".to_sym).to_s !~ args[0]
+
+      raise ArgumentError, "значение атрибута #{name} имеет не верный формат"
+    end
+
+    def validate_type(name, *args)
+      return if instance_variable_get("@#{name}".to_sym).is_a?(args[0])
+
+      raise ArgumentError, "значение атрибута #{name} имеет не верный тип"
     end
   end
 end

@@ -9,15 +9,12 @@ module Acсessors
 
       define_method(name) { instance_variable_get(var_name) }
 
-      define_method("#{name}_history") do
-        arr = []
-        arr << instance_variable_get(var_name_history)
-        arr << instance_variable_get(var_name)
-        arr.flatten.compact
-      end
+      define_method("#{name}_history") { instance_variable_get(var_name_history).to_a }
 
       define_method("#{name}=".to_sym) do |value|
-        instance_variable_set(var_name_history, send("#{name}_history"))
+        prev_values = send("#{name}_history")
+        prev_values << instance_variable_get(var_name)
+        instance_variable_set(var_name_history, prev_values)
         instance_variable_set(var_name, value)
       end
     end
