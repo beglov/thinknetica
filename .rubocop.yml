@@ -6,3 +6,6 @@ Layout/LineLength:
 
 Style/Documentation:
   Enabled: false
+
+Naming/FileName:
+  Exclude: ['lesson4/acсessors.rb']

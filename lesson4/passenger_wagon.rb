@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 require_relative 'wagon'
-require_relative 'validatable'
+require_relative 'validation'
 
 class PassengerWagon < Wagon
-  include Validatable
+  include Validation
 
   attr_reader :total_seats, :occupied_seats
+
+  validate :total_seats, :presence
+  validate :total_seats, :type, Integer
 
   def initialize(total_seats = 30)
     @total_seats = total_seats
@@ -20,12 +23,5 @@ class PassengerWagon < Wagon
 
   def free_seats
     total_seats - occupied_seats
-  end
-
-  private
-
-  def validate!
-    raise ArgumentError, 'Укажите общее кол-во мест' if total_seats.nil?
-    raise ArgumentError, 'Общее кол-во мест не может быть меньше одного' if total_seats < 1
   end
 end

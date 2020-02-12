@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
 require_relative 'instance_counter'
-require_relative 'validatable'
+require_relative 'validation'
 
 # rubocop:disable Style/ClassVars
 class Station
   include InstanceCounter
-  include Validatable
+  include Validation
 
   attr_reader :name, :trains
+
+  validate :name, :presence
+  validate :name, :type, String
+  validate :name, :format, /[\d\w]+/
 
   @@stations = []
 
@@ -48,13 +52,6 @@ class Station
 
   def to_s
     name
-  end
-
-  private
-
-  def validate!
-    raise ArgumentError, 'Укажите название станции' if name.nil?
-    raise ArgumentError, 'Название станции должно содержать как минимук один символ' if name.empty?
   end
 end
 # rubocop:enable Style/ClassVars

@@ -2,17 +2,22 @@
 
 require_relative 'manufacturer_mixin'
 require_relative 'instance_counter'
-require_relative 'validatable'
+require_relative 'validation'
 
 # rubocop:disable Style/ClassVars
 class Train
   include ManufacturerMixin
   include InstanceCounter
-  include Validatable
+  include Validation
 
   attr_reader :no, :type, :wagons, :speed, :route, :current_station
 
   NUMBER_FORMAT = /^[\w\d]{3}-?[\w\d]{2}$/i.freeze
+
+  validate :no, :presence
+  validate :no, :type, String
+  validate :no, :format, NUMBER_FORMAT
+  validate :type, :presence
 
   @@trains = {}
 
@@ -90,12 +95,6 @@ class Train
   end
 
   protected
-
-  def validate!
-    raise ArgumentError, 'Укажите номер поезда' if no.nil?
-    raise ArgumentError, 'Укажите тип' if type.nil?
-    raise ArgumentError, 'У номера не верный формат' if no !~ NUMBER_FORMAT
-  end
 
   # делаем метод закрытым что бы небыло возможности из вне назначить произвольную станцию
   def current_station=(station)

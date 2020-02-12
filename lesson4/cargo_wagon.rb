@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
 require_relative 'wagon'
-require_relative 'validatable'
+require_relative 'validation'
 
 class CargoWagon < Wagon
-  include Validatable
+  include Validation
 
   attr_reader :total_volume, :occupied_volume
+
+  validate :total_volume, :presence
+  validate :total_volume, :type, Numeric
 
   def initialize(total_volume = 100)
     @total_volume = total_volume
@@ -20,12 +23,5 @@ class CargoWagon < Wagon
 
   def free_volume
     total_volume - occupied_volume
-  end
-
-  private
-
-  def validate!
-    raise ArgumentError, 'Укажите общий объем' if total_volume.nil?
-    raise ArgumentError, 'Объем не может быть меньше одного' if total_volume < 1
   end
 end
